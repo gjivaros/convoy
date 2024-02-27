@@ -1,0 +1,83 @@
+{
+    "environment": "dev",
+    "database": {
+      "type": "mongodb",
+      "dsn": "mongodb://database:27017/convoy"
+    },
+    "sentry": {
+      "dsn": "https://32c95dc8e2d97eae6988fa05041d47f7@o4506818664398848.ingest.sentry.io/4506818670428160"
+    },
+    "queue": {
+      "type": "redis",
+      "redis": {
+        "dsn": "redis://redis:6379"
+      }
+    },
+    "logger": {
+      "type": "console",
+      "server_log": {
+        "level": "info"
+      }
+    },
+    "tracer": {
+      "type": "new_relic"
+    },
+    "new_relic": {
+      "license_key": "eu01xxdd1d3156ae684153f905f85c08FFFFNRAL",
+      "app_name": "convoy",
+      "config_enabled": true,
+      "distributed_tracer_enabled": true
+    },
+    "server": {
+      "http": {
+        "ssl": false,
+        "ssl_cert_file": "",
+        "ssl_key_file": "",
+        "port": 8080
+      }
+    },
+    "auth": {
+      "require_auth": false,
+      "file": {
+        "basic": [
+          {
+            "username": "default",
+            "password": "default",
+            "role": {
+              "type": "super_user",
+              "groups": [
+                "sendcash-pay",
+                "buycoins-api",
+                "default-group"
+              ]
+            }
+          }
+        ],
+        "api_key": [
+          {
+            "api_key": "convoy",
+            "role": {
+              "type": "super_user",
+              "groups": [
+                "sendcash-pay",
+                "default-group"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "group": {
+      "signature": {
+        "header": "X-Company-Event-WebHook-Signature",
+        "hash": "SHA256"
+      },
+      "strategy": {
+        "type": "default",
+        "default": {
+          "intervalSeconds": 20,
+          "retryLimit": 3
+        }
+      }
+    }
+  }
